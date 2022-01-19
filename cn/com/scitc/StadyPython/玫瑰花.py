@@ -98,3 +98,4 @@ turtle.pendown()
 turtle.done()
 
 time.sleep(10)
+quit()

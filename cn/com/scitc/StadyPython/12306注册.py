@@ -10,8 +10,11 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from chaojiying import Chaojiying_Client
+
+
 class ZC12306:
-    def __init__(self,userName,pwd,Qpwd,name,IDcard,email,phoneNo):
+    def __init__(self, userName, pwd, Qpwd, name, IDcard, email, phoneNo):
+        # self.time = None
         self.userName = userName
         self.pwd = pwd
         self.Qpwd = Qpwd
@@ -19,48 +22,41 @@ class ZC12306:
         self.IDcard = IDcard
         self.email = email
         self.phoneNo = phoneNo
-    # def Uinput(self):
-    #     UuserName = input("请输入注册用户名：")
-    #     Upwd = input("请输入注册密码：")
+
+    def Uinput(self):
+        UuserName = input("请输入注册用户名：")
+        # Upwd = input("请输入注册密码：")
     #     UQpwd = input("请确认注册密码：")
     #     Uname = input("请输入注册姓名：")
     #     UIDcard = input("请输入注册人身份证号码：")
     #     Uemail = input("请输入注册邮箱：")
     #     Uphone = input("请输入注册手机号：")
     def run(self):
-        driver = webdriver.Chrome()
-        driver.get("https://www.12306.cn/index/")
-
-        driver.maximize_window()   #窗口最大化
-
-        driver.implicitly_wait(5)
-
-        driver.find_element(By.LINK_TEXT,"注册").click()
-
-        driver.find_element(By.ID,"userName").send_keys(self.userName)
-        driver.find_element(By.NAME,"userDTO.password").send_keys(self.pwd)
+        self.driver = webdriver.Chrome()
+        self.driver.get("https://www.12306.cn/index/")
+        self.driver.maximize_window()  # 窗口最大化
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.LINK_TEXT, "注册").click()
+        self.driver.find_element(By.ID, "userName").send_keys(self.userName)
+        self.driver.find_element(By.NAME, "userDTO.password").send_keys(self.pwd)
         # driver.find_element(By.CSS_SELECTOR,"input#confirmPassWord").send_keys("printf0608")
-        pwd_input = driver.find_elements(By.CLASS_NAME,"inptxt")
+        pwd_input = self.driver.find_elements(By.CLASS_NAME, "inptxt")
         for i in pwd_input:
             if i.get_attribute('id') == 'confirmPassWord':
                 break
         i.send_keys(self.Qpwd)
 
-        name_input=driver.find_elements(By.TAG_NAME,"input")
+        name_input = self.driver.find_elements(By.TAG_NAME, "input")
         for i in name_input:
             if i.get_attribute('name') == 'loginUserDTO.name':
                 i.send_keys(self.name)
 
-
-        driver.find_element(By.CSS_SELECTOR,"input#cardCode").send_keys(self.IDcard)
-
-        driver.find_element(By.ID,"email").send_keys(self.email)
-
-        driver.find_element(By.CSS_SELECTOR,"#mobileNo").send_keys(self.phoneNo)
-
-        driver.find_element(By.CSS_SELECTOR,"#checkAgree").click()
-
-        driver.find_element(By.LINK_TEXT,"下一步").click()
-
+        self.driver.find_element(By.CSS_SELECTOR, "input#cardCode").send_keys(self.IDcard)
+        self.driver.find_element(By.ID, "email").send_keys(self.email)
+        self.driver.find_element(By.CSS_SELECTOR, "#mobileNo").send_keys(self.phoneNo)
+        self.driver.find_element(By.CSS_SELECTOR, "#checkAgree").click()
+        self.driver.find_element(By.LINK_TEXT, "下一步").click()
         time.sleep(10)
-ZC12306(userName='qq1873190160',pwd='printf0608',Qpwd='printf0608',name='刘龙',IDcard='430426200006088878',email='1873190160@qq.com',phoneNo='19198756208').run()
+
+ZC12306(userName='1873190160@qq.com', pwd='printf0608', Qpwd='printf0608', name='刘龙', IDcard='430426200006088878',
+        email='1873190160@qq.com', phoneNo='19198756208').run()
